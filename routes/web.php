@@ -1,22 +1,25 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-// ルーティングを設定するコントローラを宣言する
 use App\Http\Controllers\PostController;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+// 新規投稿フォームを表示（GETリクエスト）
+Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+
+// 新規登録を保存　（POSTリクエスト）
+Route::post('/posts/store', [PostController::class, 'store'])->name('posts.store');
+// 投稿一覧を表示
 Route::get('/posts', [PostController::class, 'index']);
 
+// 新規投稿フォームを表示
+Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+
+// 新規投稿を保存
+Route::post('/posts/store', [PostController::class, 'store'])->name('posts.store');
+
+// 投稿詳細を表示
 Route::get('/posts/{id}', [PostController::class, 'show']);
