@@ -11,6 +11,7 @@ use App\Http\Controllers\ResponseController;
 use App\Http\Controllers\SignInController;
 use App\Http\Controllers\CookieController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,3 +81,17 @@ Route::get('/sessions/create', [SessionController::class, 'create'])->name('sess
 Route::post('/sessions/store', [SessionController::class, 'store'])->name('sessions.store');
 
 Route::delete('/sessions/destroy', [SessionController::class, 'destroy'])->name('sessions.destroy');
+
+// 投稿データ作成画面の表示（未ログインの場合はログインページへリダイレクト）
+Route::get('/posts/create',[PostController::class, 'create'])
+->middleware('auth')
+->name('posts.create');
+
+// 投稿データを保存（POSTリクエスト）
+Route::post('/posts',[PostController::class, 'store'])->name('posts.store');
+
+// 投稿一覧を表示
+Route::get('/posts',[PostController::class, 'index'])->name('posts.index');
+
+// 投稿詳細を表示
+Route::get('/posts/{id}',[PostController::class, 'show'])->name('posts.show');
